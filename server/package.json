@@ -15,5 +15,13 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.18",
     "morgan": "~1.9.1"
+  },
+  "devDependencies": {
+    "cz-conventional-changelog": "^3.3.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
