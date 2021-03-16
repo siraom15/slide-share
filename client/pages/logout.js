@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 const LogoutPage = () => {
     const router = useRouter();
     message.success("Logout Success");
-    localStorage.removeItem("jwt");
+    // localStorage.removeItem("jwt");
     router.push("/")
 
     return (
