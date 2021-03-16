@@ -46,7 +46,7 @@ const MySlideComponent = () => {
                             >
                                 <Link href="/upload">
                                     <a>
-                                        <Button type="primary">Upload เลย!</Button>
+                                        <Button type="primary">Upload Now!</Button>
                                     </a>
                                 </Link>
                             </Empty>

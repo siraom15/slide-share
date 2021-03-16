@@ -18,6 +18,18 @@ const Navbar = ({ isLoggedIn = true }) => {
                         <a>Slide Share</a>
                     </Link>
                 </Menu.Item>
+                <>
+                        <Menu.Item key="1" icon={<LoginOutlined />}>
+                            <Link href="/login">
+                                <a>Login</a>
+                            </Link>
+                        </Menu.Item>
+                        <Menu.Item key="2" icon={<UserAddOutlined />}>
+                            <Link href="/signup">
+                                <a>Sign Up</a>
+                            </Link>
+                        </Menu.Item>
+                    </>
                 {isLoggedIn ?
                     <>
                         <Menu.Item key="3" icon={<CloudUploadOutlined />}>
