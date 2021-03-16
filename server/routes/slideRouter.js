@@ -19,5 +19,5 @@ router.put('/update/linkUrl/:slideId/', controllers.update_linkUrl);
 router.put('/update/view/:slideId/', controllers.increase_view_by_one);
 
 // delete
-
+router.del('/delete/:slideId/', middleware.checkLogin, controllers.delete_by_id);
 module.exports = router;
