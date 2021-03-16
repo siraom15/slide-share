@@ -3,7 +3,7 @@ import Head from 'next/head'
 import { Layout, BackTop } from 'antd';
 import SideBar from '../components/sidebar'
 import Navbar from '../components/navbar';
-import AllPublic from '../components/allPublic';
+import AllPublic from '../components/publicSlide';
 const { Content, Footer } = Layout;
 
 
