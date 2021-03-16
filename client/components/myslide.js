@@ -1,4 +1,4 @@
-import { message, Col, Row, Card, Empty, Button, Divider } from "antd"
+import { message, Col, Row, Empty, Button, Divider } from "antd"
 import { useEffect, useState } from "react"
 import SlideComponent from './slide'
 import { host } from '../config/server'
