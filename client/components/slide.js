@@ -5,7 +5,9 @@ import {
     DownloadOutlined,
     UserOutlined,
     ExclamationCircleOutlined,
-    PushpinOutlined 
+    PushpinOutlined,
+    GlobalOutlined,
+    CalendarOutlined
 } from '@ant-design/icons';
 import Link from 'next/link'
 import React, { useState } from 'react';
@@ -13,11 +15,10 @@ const { Meta } = Card;
 import { useRouter } from 'next/router'
 import { host } from '../config/server'
 
-
 const SlideComponent = ({ _id, photos, linkUrl, describe, userId, view_count, name, createTime }) => {
     const router = useRouter();
     const [username, setUsername] = useState("");
-    
+
     const getUserName = async (userId) => {
         const payload = {
             userId: userId
@@ -86,9 +87,11 @@ const SlideComponent = ({ _id, photos, linkUrl, describe, userId, view_count, na
                 <Meta title={name ? name : "No Name"} description={describe ? describe : "No Describe"} />
                 <Divider>Info</Divider>
                 <div>
+
+                    {/* <GlobalOutlined /> : {public ? "Public" : "Private"} <br /> */}
                     <UserOutlined /> : {userId ? username : "No Author"} <br />
                     <EyeOutlined /> : {view_count ? view_count : 0} View<br />
-                    {/* <CalendarOutlined /> Create : {createTime ? Date(createTime) : "No Data"}<br /> */}
+                    <CalendarOutlined /> Create : {createTime ? createTime : "No Data"}<br />
                 </div>
             </Card>
 

@@ -22,9 +22,9 @@ const AllPublic = () => {
             <Row>
 
                 {
-                    (allSlide && allSlide.length > 0) ? allSlide.map(s => (
+                    (allSlide && allSlide.length > 0) ? allSlide.map((k, s) => (
                         <Col style={{ padding: '2em' }}>
-                            <SlideComponent {...s} />
+                            <SlideComponent {...k} key={s} />
                         </Col>
                     ))
                         :

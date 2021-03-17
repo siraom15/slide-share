@@ -9,6 +9,7 @@ import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import { host } from '../../config/server'
 import { ExclamationCircleOutlined, DownloadOutlined } from '@ant-design/icons'
+import Link from 'next/link';
 function UpdateView(_id) {
   fetch(host + "/api/slide/update/view/" + _id, {
     method: "PUT"
@@ -93,7 +94,7 @@ const ViewSlide = () => {
         <Navbar />
         <Content >
           <Layout>
-            <SideBar />
+            <SideBar page="4" />
             <Content>
               <Row>
                 <Col span={24}>
@@ -108,7 +109,7 @@ const ViewSlide = () => {
                         {
                           (slideData?.photos && slideData?.photos[0]?.url) ?
                             <div style={{ padding: '2vh' }}>
-                              <Carousel autoplay>
+                              {/* <Carousel autoplay>
                                 <div>
                                   <h3 style={contentStyle}>1</h3>
                                 </div>
@@ -121,7 +122,7 @@ const ViewSlide = () => {
                                 <div>
                                   <h3 style={contentStyle}>4</h3>
                                 </div>
-                              </Carousel>
+                              </Carousel> */}
                               <Image src={slideData.photos[0].url} style={{
                                 width: '100',
                                 height: 'auto',
@@ -173,6 +174,18 @@ const ViewSlide = () => {
                               <Descriptions.Item label="Views Count">
                                 {slideData.view_count} Views
                           </Descriptions.Item>
+                              :
+                              null
+                          }
+                          {
+                            slideData ?
+                              <Descriptions.Item label="Edit Slide">
+                                <Link href={"/edit/" + _id}>
+                                  <a>
+                                    Edit 
+                                  </a>
+                                </Link>
+                              </Descriptions.Item>
                               :
                               null
                           }

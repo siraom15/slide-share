@@ -14,11 +14,6 @@ const LogoutPage = () => {
     },[])
     return (
         <>
-            <Result
-                icon={<SmileOutlined />}
-                title="We have log you out the website"
-                extra={<Button type="primary">Next</Button>}
-            />
         </>
     )
 }
