@@ -7,12 +7,13 @@ import {
     PushpinOutlined
 } from '@ant-design/icons';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 const { SubMenu } = Menu;
 const { Sider } = Layout;
 const SideBar = ({ isLoggedIn = true, page = '1' }) => {
+    const [collapsed, setCollapsed] = useState(true);
     return (
-        <Sider collapsible={true} width={200}
+        <Sider collapsible={true} width={200} collapsed={collapsed} onCollapse={()=>{setCollapsed(!collapsed)}}
             style={{
                 backgroundColor: "white"
             }}
