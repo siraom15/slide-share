@@ -1,4 +1,12 @@
-import { Card, Divider, Image, Empty, Modal, Carousel } from 'antd';
+import {
+    Card,
+    Divider,
+    Image,
+    Empty,
+    Modal,
+    Typography
+} from 'antd';
+const { Paragraph, Text } = Typography;
 const { confirm } = Modal
 import {
     EyeOutlined,
@@ -84,7 +92,10 @@ const SlideComponent = ({ _id, photos, linkUrl, describe, userId, view_count, na
                     </Link>,
                 ]}
             >
-                <Meta title={name ? name : "No Name"} description={describe ? describe : "No Describe"} />
+                <Meta title={name ? <Paragraph strong>{name}</Paragraph> : "No Name"} description={
+                    describe ? <Paragraph ellipsis={true, { rows: 2 }}>{describe}</Paragraph>
+                        : "No Describe"
+                } />
                 <Divider>Info</Divider>
                 <div>
 

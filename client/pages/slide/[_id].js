@@ -1,6 +1,6 @@
 // import Link from 'next/link';
 import Head from 'next/head'
-import { Layout, Image, Row, Col, Card, message, PageHeader, Descriptions, Empty, Modal, Carousel } from 'antd';
+import { Layout, Image, Row, Col, Card, message, PageHeader, Descriptions, Empty, Modal, Skeleton } from 'antd';
 const { confirm } = Modal
 import Navbar from '../../components/navbar';
 import SideBar from '../../components/sidebar';
@@ -109,20 +109,6 @@ const ViewSlide = () => {
                         {
                           (slideData?.photos && slideData?.photos[0]?.url) ?
                             <div style={{ padding: '2vh' }}>
-                              {/* <Carousel autoplay>
-                                <div>
-                                  <h3 style={contentStyle}>1</h3>
-                                </div>
-                                <div>
-                                  <h3 style={contentStyle}>2</h3>
-                                </div>
-                                <div>
-                                  <h3 style={contentStyle}>3</h3>
-                                </div>
-                                <div>
-                                  <h3 style={contentStyle}>4</h3>
-                                </div>
-                              </Carousel> */}
                               <Image src={slideData.photos[0].url} style={{
                                 width: '100',
                                 height: 'auto',
@@ -190,7 +176,6 @@ const ViewSlide = () => {
                               null
                           }
                         </Descriptions>
-
                       </Col>
                     </Row>
 
