@@ -97,23 +97,55 @@ exports.get_slide_by_user = async (req, res) => {
     Slide.find({ userId: mongoose.Types.ObjectId(_id) })
         .sort({ createTime: -1 })
         .then(data => {
-            if(!data) return res.status(200).json({
-                "error" : "No Slide Data"
+            if (!data) return res.status(200).json({
+                "error": "No Slide Data"
             })
             return res.status(200).json({
-                "success" : "Slide Data Found",
-                "data" : data
+                "success": "Slide Data Found",
+                "data": data
             })
         })
-        .catch(err=>{
+        .catch(err => {
             console.log(err);
             return res.status(200).json({
-                "error" : ""
+                "error": ""
             })
         })
 }
 
 //update
+exports.update = async (req, res, next) => {
+    // console.log(req);
+    const { slideId } = req.params;
+    const { name, describe, public, linkUrl } = req.body;
+    const { _id } = req.user_data;
+    console.log(slideId + _id);
+    if (!slideId || !_id) return res.status(400).json({
+        "error": "Bad Request"
+    })
+    Slide.findOneAndUpdate({
+        _id: mongoose.Types.ObjectId(slideId),
+        userId: mongoose.Types.ObjectId(_id)
+    },
+        {
+            name: name,
+            describe: describe,
+            public: public,
+            linkUrl: linkUrl
+
+        }).then(data => {
+            if (!data) {
+                return res.status(422).json({
+                    "error": "Slide Not Updated"
+                })
+            }
+            return res.status(200).json({
+                "success": "Slide Updated"
+            })
+        })
+}
+
+
 
 // req.params = slideid
 exports.update_name = async (req, res, next) => {
@@ -191,3 +223,26 @@ exports.increase_view_by_one = async (req, res, next) => {
 }
 
 //delete
+
+exports.delete_by_id = async (req, res, next) => {
+    const { slideId } = req.params;
+    const { _id } = req.user_data;
+    if (!slideId || !_id) return res.status(400).json({
+        "error": "Bad Request"
+    })
+    Slide.findOneAndDelete({ _id: mongoose.Types.ObjectId(slideId), userId: mongoose.Types.ObjectId(_id) })
+        .then(data => {
+            if (!data) return res.status(422).json({
+                "error": "No Slide Found / Auth Error"
+            })
+            res.status(200).json({
+                "status": "Delete Slide Success"
+            })
+        })
+        .catch(err => {
+            console.log(err);
+            return res.status(422).json({
+                "error": "Something Wrong"
+            })
+        })
+}
