@@ -50,6 +50,11 @@ const UploadPage = () => {
         await uploadData(values);
     };
 
+    const onFail = (errorInfo) => {
+        console.log(errorInfo);
+        message.error("Fill All The Form ");
+        setLoading(false);
+    }
     const enterLoading = () => {
         setLoading(() => {
             let newLoadings = loadings;
@@ -133,6 +138,7 @@ const UploadPage = () => {
                             name="validate_other"
                             {...formItemLayout}
                             onFinish={onFinish}
+                            onFinishFailed={onFail}
                             initialValues={{
                                 public: true,
                             }}>
@@ -149,7 +155,7 @@ const UploadPage = () => {
                                 name="describe"
                                 rules={[{ required: false, message: 'Please input your slide name!' }]}
                             >
-                                <TextArea placeholder="Input Slide Describe ( Optional )" />
+                                <TextArea maxLength="200" placeholder="Input Slide Describe ( Optional )" />
                             </Form.Item>
 
                             <Form.Item
@@ -182,7 +188,7 @@ const UploadPage = () => {
                                 </Upload>
                             </Form.Item>
                             <Form.Item {...tailLayout}>
-                                <Button  type="primary" htmlType="submit" loading={loadings} onClick={() => enterLoading()}>
+                                <Button type="primary" htmlType="submit" loading={loadings} onClick={() => enterLoading()}>
                                     Submit
                                 </Button>
                             </Form.Item>
