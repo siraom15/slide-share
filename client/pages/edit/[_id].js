@@ -17,15 +17,13 @@ import {
     Popconfirm
 } from 'antd';
 const { Paragraph, Title } = Typography;
-const { Meta } = Card;
-const { confirm } = Modal
 import Navbar from '../../components/navbar';
 import SideBar from '../../components/sidebar';
 const { Content } = Layout;
 import { useRouter } from 'next/router'
 import React, { useState, useEffect } from 'react'
 import { host } from '../../config/server'
-import { ExclamationCircleOutlined } from '@ant-design/icons'
+// import { ExclamationCircleOutlined } from '@ant-design/icons'
 
 const EditSlide = () => {
     const router = useRouter();
@@ -76,6 +74,7 @@ const EditSlide = () => {
         })
             .then(res => res.json())
             .then(data => {
+                console.log(data);
                 if (data.error) return message.error(data.error)
                 message.success(data.success);
                 router.push('/myslide');
@@ -104,7 +103,7 @@ const EditSlide = () => {
                 setSlideDescribe(res.data.describe);
                 setSlideLinkUrl(res.data.linkUrl);
                 setSlidePublic(res.data.public);
-                if(force) return message.success("Reset Success");
+                if (force) return message.success("Reset Success");
             })
             .catch(err => {
                 // message.error("Server Down")
@@ -134,14 +133,15 @@ const EditSlide = () => {
                                     <Card style={{ width: "100%" }}>
                                         <PageHeader
                                             className="site-page-header"
-                                            onBack={() => { router.push("/myslide") }}
+                                            onBack={() => { router.push("/slide/" + _id) }}
                                             title="Edit Slide"
                                         />
                                         <Row>
                                             <Col xs={24} sm={24} md={24} lg={10} xl={10}>
+                                                <Title level={4}>Slide Photo</Title>
                                                 {
                                                     (slideData?.photos && slideData?.photos[0]?.url) ?
-                                                        <div style={{ padding: '2vh' }}>
+                                                        <div style={{ padding: '2vh'}}>
                                                             <Image src={slideData.photos[0].url} style={{
                                                                 width: '100',
                                                                 height: 'auto',
@@ -150,7 +150,7 @@ const EditSlide = () => {
                                                             }} />
                                                         </div>
                                                         :
-                                                        <div style={{ padding: '2vh' }}>
+                                                        <div style={{ padding: '2vh', marginTop: '25%' }}>
                                                             <Empty description="No Image" />
                                                         </div>
 
@@ -163,8 +163,10 @@ const EditSlide = () => {
                                                     {
                                                         slideData?.name ?
                                                             <Row>
-                                                                <Title level={4}>Slide Name : </Title>
-                                                                <Paragraph label="Slide Name" style={{ fontSize: '20px' }} editable={{ onChange: setSlideName }}>{slideName}</Paragraph>
+                                                                <Col span={24}>
+                                                                    <Title level={4}>Slide Name : </Title>
+                                                                    <Paragraph label="Slide Name" style={{ fontSize: '20px' }} editable={{ onChange: setSlideName }}>{slideName}</Paragraph>
+                                                                </Col>
                                                             </Row>
 
                                                             :
@@ -174,15 +176,18 @@ const EditSlide = () => {
                                                     {
                                                         slideData?.describe ?
                                                             <Row>
-                                                                <Title level={4}>Slide Describe : </Title>
+                                                                <Col span={24}>
+                                                                    <Title level={4}>Slide Describe : </Title>
 
-                                                                <Paragraph label="Slide Name" style={{ fontSize: '20px' }} editable={{
-                                                                    onChange: setSlideDescribe,
-                                                                    maxLength: 200,
-                                                                    autoSize: { maxRows: 5, minRows: 3 }
-                                                                }}>
-                                                                    {slideDescribe}
-                                                                </Paragraph>
+                                                                    <Paragraph ellipsis={true ? { rows: 1, expandable: true, symbol: 'more' } : false} label="Slide Name" style={{ fontSize: '20px' }} editable={{
+                                                                        onChange: setSlideDescribe,
+                                                                        maxLength: 200,
+                                                                        autoSize: { maxRows: 5, minRows: 3 }
+                                                                    }}>
+                                                                        {slideDescribe}
+                                                                    </Paragraph>
+                                                                </Col>
+
                                                             </Row>
                                                             :
                                                             null
@@ -190,8 +195,10 @@ const EditSlide = () => {
                                                     {
                                                         slideData?.linkUrl ?
                                                             <Row>
-                                                                <Title level={4}>Link Url : </Title>
-                                                                <Paragraph label="Slide Name" style={{ fontSize: '20px' }} editable={{ onChange: setSlideLinkUrl }}>{slideLinkUrl}</Paragraph>
+                                                                <Col span={24}>
+                                                                    <Title level={4}>Link Url : </Title>
+                                                                    <Paragraph label="Slide Name" style={{ fontSize: '20px' }} editable={{ onChange: setSlideLinkUrl }}>{slideLinkUrl}</Paragraph>
+                                                                </Col>
                                                             </Row>
                                                             :
                                                             null
@@ -199,15 +206,17 @@ const EditSlide = () => {
                                                     {
                                                         slideData ?
                                                             <Row>
-                                                                <Title level={4}>Public : </Title>
-                                                                <Switch checked={slidePublic} onChange={(val) => { setSlidePublic(val); }} />
+                                                                <Col span={24}>
+                                                                    <Title level={4}>Public : </Title>
+                                                                    <Switch checked={slidePublic} onChange={(val) => { setSlidePublic(val); }} />
+                                                                </Col>
                                                             </Row>
                                                             :
                                                             null
                                                     }
                                                     {
                                                         slideData ?
-                                                            <Row>
+                                                            <Row style={{ marginTop: '1em' }}>
                                                                 <Col>
                                                                     <Button type="primary" shape="round" onClick={() => { UpdateData() }}>Save</Button>
                                                                 </Col>
@@ -233,7 +242,6 @@ const EditSlide = () => {
                                                                     <Button danger type="dashed" block shape="round">Delete Slide</Button>
 
                                                                 </Popconfirm>
-                                                                {/* <Meta title="Europe Street beat" description="www.instagram.com" /> */}
                                                             </Row>
                                                             :
                                                             null

@@ -11,25 +11,40 @@ import { useState, useEffect } from 'react'
 import { host } from '../../config/server'
 import { ExclamationCircleOutlined, DownloadOutlined } from '@ant-design/icons'
 import Link from 'next/link';
-function UpdateView(_id) {
-  fetch(host + "/api/slide/update/view/" + _id, {
-    method: "PUT"
-  })
-}
+import * as dayjs from 'dayjs';
 
-const contentStyle = {
-  height: '160px',
-  color: '#fff',
-  lineHeight: '160px',
-  textAlign: 'center',
-  background: '#364d79',
-};
+
+
 
 const ViewSlide = () => {
   const router = useRouter();
   const { _id } = router.query;
   const [slideData, setSlideData] = useState(undefined);
+  const [uploader, setUploader] = useState("");
 
+  const getUploader = async (userId) => {
+    const payload = {
+      userId: userId
+    }
+    await fetch(host + '/api/user/userdata', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    }).then(res => res.json()).then(data => {
+      setUploader(data.user_data.username)
+    })
+      .catch(err => {
+        console.log(err);
+        setUploader("");
+      });
+  }
+  const UpdateView = (_id) => {
+    fetch(host + "/api/slide/update/view/" + _id, {
+      method: "PUT"
+    })
+  }
   const showConfirm = (linkUrl) => {
     confirm({
       title: `Do you want to go to external site`,
@@ -58,6 +73,7 @@ const ViewSlide = () => {
       .then(res => res.json())
       .then(res => {
         setSlideData(res.data)
+        getUploader(res.data?.userId ? res.data.userId : "");
       })
       .catch(err => {
         message.error("Server Down")
@@ -78,6 +94,7 @@ const ViewSlide = () => {
       .then(res => res.json())
       .then(res => {
         setSlideData(res.data)
+        getUploader(res.data?.userId ? res.data.userId : "");
       })
       .catch(err => {
         message.error("Server Down")
@@ -95,7 +112,7 @@ const ViewSlide = () => {
         <Navbar />
         <Content >
           <Layout>
-            <SideBar page="4" />
+            <SideBar page="1" />
             <Content>
               <Row>
                 <Col span={24}>
@@ -106,7 +123,7 @@ const ViewSlide = () => {
                       title="View Slide"
                     />
                     <Row>
-                      <Col xs={24} sm={24} md={24} lg={10} xl={14}>
+                      <Col xs={24} sm={24} md={24} lg={10} xl={10}>
                         {
                           (slideData?.photos && slideData?.photos[0]?.url) ?
                             <div style={{ padding: '2vh' }}>
@@ -124,19 +141,21 @@ const ViewSlide = () => {
 
                         }
                       </Col>
-                      <Col>
-                        <Descriptions title="Slide Infomation">
+                      <Col xs={24} sm={24} md={24} lg={10} xl={14}>
+                        <Descriptions title="Slide Infomation" bordered>
                           {
                             slideData?.name ?
-                              <Descriptions.Item label="Slide Name">{slideData.name}</Descriptions.Item>
+                              <Descriptions.Item span={3} label={<Paragraph strong>Slide Name</Paragraph>}>
+                                {slideData.name}
+                              </Descriptions.Item>
                               :
                               null
                           }
 
                           {
                             slideData?.describe ?
-                              <Descriptions.Item label="Describe">
-                                <Paragraph ellipsis={true ? { rows: 2, expandable: true, symbol: 'more' } : false}>
+                              <Descriptions.Item span={3} label={<Paragraph strong>Slide Describe</Paragraph>}>
+                                <Paragraph ellipsis={true ? { expandable: true, symbol: 'more' } : false}>
                                   {slideData.describe}
                                 </Paragraph>
                               </Descriptions.Item>
@@ -146,16 +165,26 @@ const ViewSlide = () => {
 
                           {
                             slideData?.createTime ?
-                              <Descriptions.Item label="Create Date">{slideData.createTime}</Descriptions.Item>
+                              <Descriptions.Item span={3} label="Create Date">
+                                {dayjs(slideData.createTime).toString()}
+                              </Descriptions.Item>
                               :
                               null
                           }
                           {
                             slideData?.linkUrl ?
-                              <Descriptions.Item label="Dowload Link">
+                              <Descriptions.Item span={3} label="Dowload Link">
                                 <a onClick={() => { showConfirm(slideData.linkUrl) }}>
                                   {slideData.linkUrl}
                                 </a>
+                              </Descriptions.Item>
+                              :
+                              null
+                          }
+                          {
+                            uploader ?
+                              <Descriptions.Item span={3} label="Uploader">
+                                {uploader}
                               </Descriptions.Item>
                               :
                               null
