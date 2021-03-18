@@ -1,6 +1,7 @@
 // import Link from 'next/link';
 import Head from 'next/head'
-import { Layout, Image, Row, Col, Card, message, PageHeader, Descriptions, Empty, Modal, Skeleton } from 'antd';
+import { Layout, Image, Row, Col, Card, message, PageHeader, Descriptions, Empty, Modal, Typography } from 'antd';
+const { Paragraph } = Typography;
 const { confirm } = Modal
 import Navbar from '../../components/navbar';
 import SideBar from '../../components/sidebar';
@@ -134,7 +135,11 @@ const ViewSlide = () => {
 
                           {
                             slideData?.describe ?
-                              <Descriptions.Item label="Describe">{slideData.describe}</Descriptions.Item>
+                              <Descriptions.Item label="Describe">
+                                <Paragraph ellipsis={true ? { rows: 2, expandable: true, symbol: 'more' } : false}>
+                                  {slideData.describe}
+                                </Paragraph>
+                              </Descriptions.Item>
                               :
                               null
                           }
@@ -168,7 +173,7 @@ const ViewSlide = () => {
                               <Descriptions.Item label="Edit Slide">
                                 <Link href={"/edit/" + _id}>
                                   <a>
-                                    Edit 
+                                    Edit
                                   </a>
                                 </Link>
                               </Descriptions.Item>
