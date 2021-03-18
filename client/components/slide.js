@@ -18,10 +18,12 @@ import {
     CalendarOutlined
 } from '@ant-design/icons';
 import Link from 'next/link'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 const { Meta } = Card;
 import { useRouter } from 'next/router'
 import { host } from '../config/server'
+import * as dayjs from 'dayjs';
+
 
 const SlideComponent = ({ _id, photos, linkUrl, describe, userId, view_count, name, createTime }) => {
     const router = useRouter();
@@ -45,7 +47,9 @@ const SlideComponent = ({ _id, photos, linkUrl, describe, userId, view_count, na
                 setUsername("");
             });
     }
-    getUserName(userId)
+    useEffect(() => {
+        getUserName(userId)
+    }, [])
     const showConfirm = () => {
         confirm({
             title: `Do you want to go to external site`,
@@ -102,7 +106,7 @@ const SlideComponent = ({ _id, photos, linkUrl, describe, userId, view_count, na
                     {/* <GlobalOutlined /> : {public ? "Public" : "Private"} <br /> */}
                     <UserOutlined /> : {userId ? username : "No Author"} <br />
                     <EyeOutlined /> : {view_count ? view_count : 0} View<br />
-                    <CalendarOutlined /> Create : {createTime ? createTime : "No Data"}<br />
+                    <CalendarOutlined /> Create : {createTime ? dayjs(createTime).toString() : "No Data"}<br />
                 </div>
             </Card>
 
