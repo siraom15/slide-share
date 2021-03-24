@@ -24,7 +24,7 @@ import { useRouter } from 'next/router'
 import React, { useState, useEffect } from 'react'
 import { host } from '../../config/server'
 import Cookies from 'js-cookie';
-
+import cookies from 'js-cookie';
 // import { ExclamationCircleOutlined } from '@ant-design/icons'
 
 const EditSlide = () => {
@@ -36,6 +36,7 @@ const EditSlide = () => {
     const [slideLinkUrl, setSlideLinkUrl] = useState("");
     const [slidePhoto, setSlidePhoto] = useState("");
     const [slidePublic, setSlidePublic] = useState("");
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const UpdateData = async () => {
         const payload = {
@@ -87,6 +88,7 @@ const EditSlide = () => {
             })
     }
 
+
     const fetchData = async (force = false) => {
         if (slideData && !force) return;
         let payload = { _id: _id };
@@ -113,9 +115,40 @@ const EditSlide = () => {
             })
     }
 
+
     fetchData();
+
     useEffect(async () => {
         console.log("useEffect");
+        let checkLoggedIn = async () => {
+            if (cookies.get('token')) {
+                await fetch(host + '/api/user/mydata', {
+                    method: 'POST',
+                    headers: {
+                        authorization: `Bearer ${cookies.get('token')}`
+                    }
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            setIsLoggedIn(true);
+                        } else {
+                            router.push('/');
+                            setIsLoggedIn(false);
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        router.push('/');
+
+                        setIsLoggedIn(false);
+                    })
+            } else {
+                router.push('/');
+                setIsLoggedIn(false);
+            }
+        }
+        checkLoggedIn();
         fetchData();
     }, []);
 
@@ -143,7 +176,7 @@ const EditSlide = () => {
                                                 <Title level={4}>Slide Photo</Title>
                                                 {
                                                     (slideData?.photos && slideData?.photos[0]?.url) ?
-                                                        <div style={{ padding: '2vh'}}>
+                                                        <div style={{ padding: '2vh' }}>
                                                             <Image src={slideData.photos[0].url} style={{
                                                                 width: '100',
                                                                 height: 'auto',
