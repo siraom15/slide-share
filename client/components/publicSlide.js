@@ -13,7 +13,7 @@ const AllPublic = () => {
                 setAllSlide(res.data);
             }).catch(err => {
                 console.log(err);
-                message.error("Server Down | Cannot Fetch all slide");
+                message.error("Server Down | Please wait a few second",10);
             })
     }, [])
     return (

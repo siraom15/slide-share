@@ -22,7 +22,6 @@ exports.create_slide = async (req, res) => {
     });
     slide.save().then(
         data => {
-            console.log(data.data);
             res.status(201).json({
                 success: "created Slide",
                 data: data
@@ -41,7 +40,6 @@ exports.create_slide = async (req, res) => {
 exports.get_all_slide = async (req, res) => {
     Slide.find().sort({ createTime: -1 }).then(
         data => {
-            console.log(data);
             res.status(200).json({
                 data: data
             })
@@ -115,11 +113,9 @@ exports.get_slide_by_user = async (req, res) => {
 
 //update
 exports.update = async (req, res, next) => {
-    // console.log(req);
     const { slideId } = req.params;
     const { name, describe, public, linkUrl } = req.body;
     const { _id } = req.user_data;
-    console.log(slideId + _id);
     if (!slideId || !_id) return res.status(400).json({
         "error": "Bad Request"
     })
@@ -204,7 +200,6 @@ exports.update_linkUrl = async (req, res, next) => {
 }
 
 exports.increase_view_by_one = async (req, res, next) => {
-    console.log("Called");
     const { slideId } = req.params;
     if (!slideId) return res.status(400).json({
         error: "No Slide founded"

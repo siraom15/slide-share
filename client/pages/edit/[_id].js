@@ -55,7 +55,6 @@ const EditSlide = () => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
                 if (data.error) {
                     return message.error(data.error)
                 }
@@ -77,7 +76,6 @@ const EditSlide = () => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
                 if (data.error) return message.error(data.error)
                 message.success(data.success);
                 router.push('/myslide');
@@ -101,7 +99,6 @@ const EditSlide = () => {
         })
             .then(res => res.json())
             .then(res => {
-                console.log(res);
                 setSlideData(res.data);
                 setSlideName(res.data.name);
                 setSlideDescribe(res.data.describe);
@@ -119,7 +116,6 @@ const EditSlide = () => {
     fetchData();
 
     useEffect(async () => {
-        console.log("useEffect");
         let checkLoggedIn = async () => {
             if (cookies.get('token')) {
                 await fetch(host + '/api/user/mydata', {
@@ -166,6 +162,7 @@ const EditSlide = () => {
                             <Row>
                                 <Col span={24}>
                                     <Card style={{ width: "100%" }}>
+                                        <Divider>Edit Slide</Divider>
                                         <PageHeader
                                             className="site-page-header"
                                             onBack={() => { router.push("/slide/" + _id) }}
@@ -173,7 +170,6 @@ const EditSlide = () => {
                                         />
                                         <Row>
                                             <Col xs={24} sm={24} md={24} lg={10} xl={10}>
-                                                <Title level={4}>Slide Photo</Title>
                                                 {
                                                     (slideData?.photos && slideData?.photos[0]?.url) ?
                                                         <div style={{ padding: '2vh' }}>
