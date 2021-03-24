@@ -47,11 +47,19 @@ exports.check_user = (req, res) => {
                 "error": "Doesn't have this email"
             })
             bcrypt.compare(password, user.password, (err, result) => {
-                const token = jwt.sign({ _id: user._id }, JWTSECRET, { expiresIn: '12h' });
-                res.status(200).json({
-                    "success": "Login Success",
-                    "token": token
-                })
+                if (result) {
+
+                    const token = jwt.sign({ _id: user._id }, JWTSECRET, { expiresIn: '12h' });
+                    res.status(200).json({
+                        "success": "Login Success",
+                        "token": token
+                    })
+                } else {
+                    res.status(422).json({
+                        "error": "Password Incorrect"
+                    })
+                }
+
             })
         }
     )
@@ -79,7 +87,7 @@ exports.search_user = (req, res) => {
     })
 }
 
-exports.get_mydata = (req, res) =>{
+exports.get_mydata = (req, res) => {
     const { _id } = req.user_data;
     if (!_id) return res.status(400).json({
         "error": "Please Login first"
