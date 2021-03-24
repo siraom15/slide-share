@@ -23,3 +23,56 @@ body {
   font-family: 'Athiti', sans-serif;
   letter-spacing: 0.05em;
 }
+
+a:hover {
+  color: #303030 !important;
+}
+
+.ant-layout-sider-trigger{
+  background-color: black !important;
+}
+.ant-menu-item-selected {
+  color : white !important;
+  background-color: black !important;
+
+}
+.ant-menu-item-active {
+  color : white !important;
+  background-color: black;
+
+}
+.ant-menu-item-selected a:hover{
+  color: #000;
+  border: 0 !important;
+}
+.ant-menu-item-active a:active{
+  color: #000 !important;
+}
+.ant-menu-item-active a:hover{
+  color: white !important;
+  border: 0  !important;
+}
+.ant-menu-inline .ant-menu-item::after{
+  border: 0 !important;
+}
+.ant-menu-submenu-selected{
+  border: 0 !important;
+}
+.ant-btn-primary {
+  color: #fff;
+  background: black;
+  border-color: black;
+  text-shadow: 0 -1px 0 rgb(0 0 0 / 12%);
+  box-shadow: 0 2px 0 rgb(0 0 0 / 5%);
+}
+
+.ant-btn-primary :active {
+  color: black !important;
+  background: white !important;
+  border-color: black;
+}
+.ant-btn-primary :focus {
+  color: black !important;
+  background: white !important;
+  border-color: black;
+}

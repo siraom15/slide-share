@@ -15,7 +15,7 @@ const SideBar = ({ isLoggedIn = false, page = '1' }) => {
     return (
         <Sider collapsible={true} width={200} collapsed={collapsed} onCollapse={()=>{setCollapsed(!collapsed)}}
             style={{
-                backgroundColor: "white"
+                backgroundColor: "white",
             }}
         >
 
@@ -27,7 +27,7 @@ const SideBar = ({ isLoggedIn = false, page = '1' }) => {
 
                 <Menu.Item key="1" icon={<GlobalOutlined />}>
                     <Link href="/">
-                        <a>
+                        <a style={{color:'white'}}>
                             Public Slide
                         </a>
                     </Link>
@@ -37,21 +37,21 @@ const SideBar = ({ isLoggedIn = false, page = '1' }) => {
                         <>
                             <Menu.Item key="2" icon={<CloudUploadOutlined />}>
                                 <Link href="/upload">
-                                    <a>
+                                    <a style={{color:'white'}}>
                                         Upload Slide
                                     </a>
                                 </Link>
                             </Menu.Item>
                             <Menu.Item key="3" icon={<PushpinOutlined />}>
                                 <Link href="/">
-                                    <a>
+                                    <a style={{color:'white'}}>
                                         Saved Slide
                                     </a>
                                 </Link>
                             </Menu.Item>
                             <Menu.Item key="4" icon={<LockOutlined />}>
                                 <Link href="/myslide">
-                                    <a>
+                                    <a style={{color:'white'}}>
                                         My Slide
                                     </a>
                                 </Link>

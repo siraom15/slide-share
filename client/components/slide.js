@@ -4,7 +4,8 @@ import {
     Image,
     Empty,
     Modal,
-    Typography
+    Typography,
+    Badge
 } from 'antd';
 const { Paragraph, Text } = Typography;
 const { confirm } = Modal
@@ -94,18 +95,29 @@ const SlideComponent = ({ _id, photos, linkUrl, describe, userId, view_count, na
                     </Link>,
                 ]}
             >
-                <Meta title={name ? <Paragraph strong>{name}</Paragraph> : "No Name"} description={
-                    describe ? <Paragraph ellipsis={true, { rows: 2 }}>{describe}</Paragraph>
-                        : "No Describe"
-                } />
+                <Meta
+                    title={
+                        name ?
+                            <Link href={"/slide/" + _id}>
+                                <>
+                                    <Paragraph strong underline>{name}</Paragraph>
+                                </>
+                            </Link>
+                            :
+                            "No Name"}
+                    description={
+                        describe ?
+                            <Paragraph ellipsis={true, { rows: 2 }} type="secondary">{describe}</Paragraph>
+                            : "No Describe"
+                    } />
                 <Divider>Info</Divider>
-                <div>
-
-                    {/* <GlobalOutlined /> : {public ? "Public" : "Private"} <br /> */}
-                    <UserOutlined /> : {userId ? username : "No Author"} <br />
-                    <EyeOutlined /> : {view_count ? view_count : 0} View<br />
-                    <CalendarOutlined /> Create : {createTime ? dayjs(createTime).toString() : "No Data"}<br />
-                </div>
+                <Link href={"/slide/" + _id}>
+                    <>
+                        <UserOutlined /> : {userId ? username : "No Author"} <br />
+                        <EyeOutlined /> : {view_count ? view_count : 0} View <br />
+                        <CalendarOutlined /> Create : {createTime ? dayjs(createTime).toString() : "No Data"}<br />
+                    </>
+                </Link>
             </Card>
 
         </>
