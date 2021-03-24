@@ -26,9 +26,9 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <!-- <a href="https://github.com/siraom15/slide-share">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
-  </a> -->
+  <a href="https://github.com/siraom15/slide-share">
+    <img src="https://github.com/siraom15/slide-share/blob/main/images/logo.png?raw=true" alt="Logo" width="80" height="80">
+  </a>
 
   <h3 align="center">Slide Share</h3>
 
