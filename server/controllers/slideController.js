@@ -136,7 +136,7 @@ exports.update = async (req, res, next) => {
         }).then(data => {
             if (!data) {
                 return res.status(422).json({
-                    "error": "Slide Not Updated"
+                    "error": "No Slide / Failure Auth"
                 })
             }
             return res.status(200).json({
@@ -236,7 +236,7 @@ exports.delete_by_id = async (req, res, next) => {
                 "error": "No Slide Found / Auth Error"
             })
             res.status(200).json({
-                "status": "Delete Slide Success"
+                "success": "Delete Slide Success"
             })
         })
         .catch(err => {

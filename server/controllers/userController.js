@@ -79,6 +79,27 @@ exports.search_user = (req, res) => {
     })
 }
 
+exports.get_mydata = (req, res) =>{
+    const { _id } = req.user_data;
+    if (!_id) return res.status(400).json({
+        "error": "Please Login first"
+    });
+    User.findById(_id).then(data => {
+        if (!data) return res.status(200).json({
+            "error": "Don't have this user"
+        })
+        // data.password = undefined
+        res.status(200).json({
+            "success": "Founded",
+            "user_data": data
+        })
+    }).catch(err => {
+        console.log(err);
+        return res.status(200).json({
+            "error": "Don't have this user"
+        })
+    })
+}
 // has req.body.slide_id
 exports.save_slide = (req, res) => {
     const { _id } = req.user_data;

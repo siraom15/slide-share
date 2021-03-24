@@ -9,7 +9,7 @@ router.post('/create', controller.create_user);
 //read
 router.post('/auth',controller.check_user);
 router.post('/userdata',controller.search_user)
-
+router.post('/mydata', middleware.checkLogin ,controller.get_mydata)
 //update
 
 // @body {

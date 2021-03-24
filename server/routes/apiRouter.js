@@ -3,7 +3,7 @@ const router = express.Router();
 const middleware = require('../middleware/middleware')
 
 
-router.get('/', middleware.checkLogin, (req, res, next) => {
+router.get('/', (req, res, next) => {
     res.json({
         success: "api worked"
     })
