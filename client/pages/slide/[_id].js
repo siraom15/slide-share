@@ -12,16 +12,15 @@ import { host } from '../../config/server'
 import { ExclamationCircleOutlined, DownloadOutlined } from '@ant-design/icons'
 import Link from 'next/link';
 import * as dayjs from 'dayjs';
-
-
-
+import cookies from 'js-cookie'
 
 const ViewSlide = () => {
   const router = useRouter();
   const { _id } = router.query;
   const [slideData, setSlideData] = useState(undefined);
   const [uploader, setUploader] = useState("");
-
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userId, setUserId] = useState("");
   const getUploader = async (userId) => {
     const payload = {
       userId: userId
@@ -82,6 +81,34 @@ const ViewSlide = () => {
   }
   fetchData();
   useEffect(async () => {
+
+    let checkLoggedIn = async () => {
+      if (cookies.get('token')) {
+        await fetch(host + '/api/user/mydata', {
+          method: 'POST',
+          headers: {
+            authorization: `Bearer ${cookies.get('token')}`
+          }
+        })
+          .then(res => res.json())
+          .then(data => {
+            if (data.success) {
+              setIsLoggedIn(true);
+              setUserId(data.user_data._id);
+            } else {
+              setIsLoggedIn(false);
+            }
+          })
+          .catch(err => {
+            console.log(err);
+            setIsLoggedIn(false);
+          })
+      } else {
+        setIsLoggedIn(false);
+      }
+    }
+    checkLoggedIn();
+
     UpdateView(_id);
     let payload = { _id: _id };
     await fetch(host + "/api/slide/getSlideById", {
@@ -100,7 +127,9 @@ const ViewSlide = () => {
         message.error("Server Down")
         return null
       })
-    console.log("slideData:" + slideData);
+
+    console.log("slideData:");
+    console.log(slideData);
   }, []);
 
   return (
@@ -109,10 +138,10 @@ const ViewSlide = () => {
         <title>ViewSlide | Slide Share</title>
       </Head>
       <Layout >
-        <Navbar />
+        <Navbar isLoggedIn={isLoggedIn} />
         <Content >
           <Layout>
-            <SideBar page="1" />
+            <SideBar page="1" isLoggedIn={isLoggedIn} />
             <Content>
               <Row>
                 <Col span={24}>
@@ -190,6 +219,14 @@ const ViewSlide = () => {
                               null
                           }
                           {
+                            slideData ?
+                              <Descriptions.Item span={3} label="Is Public">
+                                {slideData.public ? "Public" : "Private"}
+                              </Descriptions.Item>
+                              :
+                              null
+                          }
+                          {
                             slideData?.view_count ?
                               <Descriptions.Item label="Views Count">
                                 {slideData.view_count} Views
@@ -198,7 +235,7 @@ const ViewSlide = () => {
                               null
                           }
                           {
-                            slideData ?
+                            (slideData?.userId == userId) ?
                               <Descriptions.Item label="Edit Slide">
                                 <Link href={"/edit/" + _id}>
                                   <a>

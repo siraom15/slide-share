@@ -1,7 +1,7 @@
 import 'antd/dist/antd.css';
+import { useEffect } from 'react';
 import '../styles/globals.css'
-
-function MyApp({ Component, pageProps }) {
+const MyApp = ({ Component, pageProps }) => {
   return (
     <Component {...pageProps} />
   )
