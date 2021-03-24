@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import SlideComponent from './slide'
 import { host } from '../config/server'
 import Link from "next/link"
+import Cookies from 'js-cookie';
 
 const MySlideComponent = () => {
     const [allSlide, setAllSlide] = useState([])
@@ -10,7 +11,7 @@ const MySlideComponent = () => {
         await fetch(host + "/api/slide/getmyslide", {
             method: 'GET',
             headers : {
-                'Authorization' : 'Bearer '+ localStorage.getItem('jwt')
+                'Authorization' : 'Bearer '+ Cookies.get('token')
             }
         }).then(res => res.json())
             .then(res => {
