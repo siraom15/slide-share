@@ -9,7 +9,7 @@ import {
     LogoutOutlined
 } from '@ant-design/icons';
 const { Header } = Layout;
-const Navbar = ({ isLoggedIn = true }) => {
+const Navbar = ({ isLoggedIn = false }) => {
     return (
         <Header className="header" style={{ padding:0 }}>
             <Menu theme="white" mode="horizontal" >
@@ -18,7 +18,7 @@ const Navbar = ({ isLoggedIn = true }) => {
                         <a>Slide Share</a>
                     </Link>
                 </Menu.Item>
-                <>
+                {/* <>
                         <Menu.Item key="1" icon={<LoginOutlined />}>
                             <Link href="/login">
                                 <a>Login</a>
@@ -29,7 +29,7 @@ const Navbar = ({ isLoggedIn = true }) => {
                                 <a>Sign Up</a>
                             </Link>
                         </Menu.Item>
-                    </>
+                    </> */}
                 {isLoggedIn ?
                     <>
                         <Menu.Item key="3" icon={<CloudUploadOutlined />}>

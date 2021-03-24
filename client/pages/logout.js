@@ -2,10 +2,12 @@ import { Result, Button, message } from 'antd';
 import { SmileOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import Cookies from 'js-cookie';
+
 const LogoutPage = () => {
     const router = useRouter();
     const clearToken = () =>{
-        localStorage.removeItem("jwt");
+        Cookies.remove("token");
         router.push("/")
     }
     useEffect(()=>{

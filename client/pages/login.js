@@ -5,6 +5,8 @@ const { Text, Title } = Typography;
 const { ArrowLeftOutlined } = require('@ant-design/icons')
 import { host } from '../config/server'
 import { useRouter } from 'next/router';
+import Cookies from 'js-cookie';
+
 const layout = {
     labelCol: { span: 24 },
     wrapperCol: { span: 24 },
@@ -37,7 +39,7 @@ const Login = () => {
                     message.error(data.error);
                 } else {
                     message.success(data.success);
-                    localStorage.setItem('jwt', data.token);
+                    Cookies.set('token', data.token);
                     router.push("/")
                 }
             })
@@ -83,7 +85,7 @@ const Login = () => {
                                         }
                                     ]}
                                 >
-                                    <Input />
+                                    <Input autoFocus={true} />
                                 </Form.Item>
 
                                 <Form.Item

@@ -23,6 +23,8 @@ const { Content } = Layout;
 import { useRouter } from 'next/router'
 import React, { useState, useEffect } from 'react'
 import { host } from '../../config/server'
+import Cookies from 'js-cookie';
+
 // import { ExclamationCircleOutlined } from '@ant-design/icons'
 
 const EditSlide = () => {
@@ -46,7 +48,7 @@ const EditSlide = () => {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + localStorage.getItem('jwt')
+                'Authorization': 'Bearer ' + Cookies.get('token')
             },
             body: JSON.stringify(payload)
         })
@@ -69,7 +71,7 @@ const EditSlide = () => {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + localStorage.getItem('jwt')
+                'Authorization': 'Bearer ' + Cookies.get('token')
             }
         })
             .then(res => res.json())
@@ -123,10 +125,10 @@ const EditSlide = () => {
                 <title>Edit | Slide Share</title>
             </Head>
             <Layout >
-                <Navbar />
+                <Navbar isLoggedIn={true} />
                 <Content >
                     <Layout>
-                        <SideBar page="4" />
+                        <SideBar page="4" isLoggedIn={true} />
                         <Content>
                             <Row>
                                 <Col span={24}>

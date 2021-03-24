@@ -10,7 +10,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 const { SubMenu } = Menu;
 const { Sider } = Layout;
-const SideBar = ({ isLoggedIn = true, page = '1' }) => {
+const SideBar = ({ isLoggedIn = false, page = '1' }) => {
     const [collapsed, setCollapsed] = useState(true);
     return (
         <Sider collapsible={true} width={200} collapsed={collapsed} onCollapse={()=>{setCollapsed(!collapsed)}}

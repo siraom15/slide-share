@@ -15,7 +15,7 @@ import TextArea from 'antd/lib/input/TextArea';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { host } from '../config/server'
-
+import Cookies from 'js-cookie';
 
 const fileList = [
 
@@ -79,7 +79,7 @@ const UploadPage = () => {
                 method: 'post',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': "Bearer " + localStorage.getItem('jwt')
+                    'Authorization': "Bearer " + Cookies.get('token')
                 },
                 body: JSON.stringify(payload)
             },
