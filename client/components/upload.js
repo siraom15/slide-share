@@ -10,7 +10,7 @@ import {
     Card,
     message
 } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
+import { UploadOutlined, CloudUploadOutlined } from '@ant-design/icons';
 import TextArea from 'antd/lib/input/TextArea';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
@@ -101,6 +101,7 @@ const UploadPage = () => {
 
 
     const uploadImg = async () => {
+        if(!image) return null;
         const formData = new FormData();
         formData.append('upload_preset', 'slide-share');
         formData.append('file', image);
@@ -180,9 +181,12 @@ const UploadPage = () => {
                                 onChange={(e) => setImage(e.target.files[0])}
                             >
                                 <Upload
+                                    maxCount={1}
                                     listType="picture"
                                     defaultFileList={[...fileList]}
                                     className="upload-list-inline"
+                                    onRemove={(e) => setImage("")}
+
                                 >
                                     <Button icon={<UploadOutlined />}>Upload</Button>
                                 </Upload>
