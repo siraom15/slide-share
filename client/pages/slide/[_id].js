@@ -1,6 +1,6 @@
 // import Link from 'next/link';
 import Head from 'next/head'
-import { Layout, Image, Row, Col, Card, message, PageHeader, Descriptions, Empty, Modal, Typography } from 'antd';
+import { Layout, Image, Row, Col, Card, message, PageHeader, Descriptions, Empty, Modal, Typography, Divider } from 'antd';
 const { Paragraph } = Typography;
 const { confirm } = Modal
 import Navbar from '../../components/navbar';
@@ -32,7 +32,7 @@ const ViewSlide = () => {
       },
       body: JSON.stringify(payload)
     }).then(res => res.json()).then(data => {
-      setUploader(data.user_data.username)
+      setUploader(data.user_data ? data.user_data.username : "");
     })
       .catch(err => {
         console.log(err);
@@ -50,11 +50,9 @@ const ViewSlide = () => {
       icon: <ExclamationCircleOutlined />,
       content: `Full Link \n${linkUrl}`,
       onOk() {
-        console.log('OK');
         router.push(linkUrl)
       },
       onCancel() {
-        console.log('Cancel');
       },
     });
   }
@@ -120,16 +118,18 @@ const ViewSlide = () => {
     })
       .then(res => res.json())
       .then(res => {
-        setSlideData(res.data)
-        getUploader(res.data?.userId ? res.data.userId : "");
+        if (res.success) {
+          setSlideData(res.data)
+          getUploader(res.data?.userId ? res.data.userId : "");
+        } else {
+          // message.error("Slide Not Found")
+        }
+
       })
       .catch(err => {
-        message.error("Server Down")
+        // message.error("Server Down")
         return null
       })
-
-    console.log("slideData:");
-    console.log(slideData);
   }, []);
 
   return (
@@ -145,7 +145,9 @@ const ViewSlide = () => {
             <Content>
               <Row>
                 <Col span={24}>
+
                   <Card style={{ width: "100%" }}>
+                    <Divider>View Slide</Divider>
                     <PageHeader
                       className="site-page-header"
                       onBack={() => { router.push("/") }}
@@ -175,7 +177,9 @@ const ViewSlide = () => {
                           {
                             slideData?.name ?
                               <Descriptions.Item span={3} label={<Paragraph strong>Slide Name</Paragraph>}>
-                                {slideData.name}
+                                <Paragraph>
+                                  {slideData.name}
+                                </Paragraph>
                               </Descriptions.Item>
                               :
                               null
@@ -194,15 +198,16 @@ const ViewSlide = () => {
 
                           {
                             slideData?.createTime ?
-                              <Descriptions.Item span={3} label="Create Date">
-                                {dayjs(slideData.createTime).toString()}
+                              <Descriptions.Item span={3} label={<Paragraph strong>Slide Create Time</Paragraph>}>
+                                <Paragraph>{dayjs(slideData.createTime).toString()}</Paragraph>
+
                               </Descriptions.Item>
                               :
                               null
                           }
                           {
                             slideData?.linkUrl ?
-                              <Descriptions.Item span={3} label="Dowload Link">
+                              <Descriptions.Item span={3} label={<Paragraph strong>Download URL</Paragraph>}>
                                 <a onClick={() => { showConfirm(slideData.linkUrl) }}>
                                   {slideData.linkUrl}
                                 </a>
@@ -212,31 +217,35 @@ const ViewSlide = () => {
                           }
                           {
                             uploader ?
-                              <Descriptions.Item span={3} label="Uploader">
-                                {uploader}
+                              <Descriptions.Item span={3} label={<Paragraph strong>Uploaded</Paragraph>}>
+                                <Paragraph>{uploader}</Paragraph>
                               </Descriptions.Item>
                               :
                               null
                           }
                           {
                             slideData ?
-                              <Descriptions.Item span={3} label="Is Public">
-                                {slideData.public ? "Public" : "Private"}
+                              <Descriptions.Item span={3} label={<Paragraph strong>Public</Paragraph>}>
+                                <Paragraph>
+                                  {slideData.public ? "Public" : "Private"}
+
+                                </Paragraph>
                               </Descriptions.Item>
                               :
                               null
                           }
                           {
                             slideData?.view_count ?
-                              <Descriptions.Item label="Views Count">
-                                {slideData.view_count} Views
-                          </Descriptions.Item>
+                              <Descriptions.Item label={<Paragraph strong>Views</Paragraph>}>
+                                <Paragraph>{slideData.view_count} Views</Paragraph>
+
+                              </Descriptions.Item>
                               :
                               null
                           }
                           {
                             (slideData?.userId == userId) ?
-                              <Descriptions.Item label="Edit Slide">
+                              <Descriptions.Item label={<Paragraph strong>Edit Slide</Paragraph>}>
                                 <Link href={"/edit/" + _id}>
                                   <a>
                                     Edit

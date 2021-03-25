@@ -1,25 +1,6 @@
-/* html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-* {
-  box-sizing: border-box;
-} */
 @import url('https://fonts.googleapis.com/css2?family=Julius+Sans+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Athiti:wght@400&display=swap');
 body {
-  /* padding: 0;
-  margin: 0; */
-  /* font-family: 'Julius Sans One', sans-serif; */
   font-family: 'Athiti', sans-serif;
   letter-spacing: 0.05em;
 }
@@ -34,7 +15,6 @@ a:hover {
 .ant-menu-item-selected {
   color : white !important;
   background-color: black !important;
-
 }
 .ant-menu-item-active {
   color : white !important;
@@ -42,7 +22,7 @@ a:hover {
 
 }
 .ant-menu-item-selected a:hover{
-  color: #000;
+  color: white;
   border: 0 !important;
 }
 .ant-menu-item-active a:active{
@@ -66,13 +46,44 @@ a:hover {
   box-shadow: 0 2px 0 rgb(0 0 0 / 5%);
 }
 
-.ant-btn-primary :active {
+/* .ant-btn-primary :active {
   color: black !important;
   background: white !important;
   border-color: black;
+} */
+/* .ant-btn-primary :focus {
+  color: black !important;
+  background: white !important;
+  border-color: black;
+} */
+.ant-switch-checked{
+  background-color: #000 !important;
 }
-.ant-btn-primary :focus {
-  color: black !important;
-  background: white !important;
-  border-color: black;
+.ant-checkbox-checked .ant-checkbox-inner{
+  background-color: #000 !important;
+  border: 0 !important;
+}
+/* .ant-checkbox-inner {
+  background-color: #000 !important;
+
+} */
+.ant-btn-primary:hover, .ant-btn-primary:focus{
+  background-color: #303030a1 !important;
+  border: 0 !important;
+}
+
+.ant-input:hover{
+    border-color: rgb(75, 75, 75) !important;
+    border-right-width: 1px !important;
+}
+
+.ant-input-affix-wrapper:hover{
+  border-color: rgb(77, 77, 77) !important;
+  border-right-width: 1px !important;
+}
+.ant-checkbox-wrapper-checked{
+  border: 0 !important;
+}
+.ant-checkbox-wrapper{
+  border: #000 !important;
 }

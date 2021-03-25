@@ -5,7 +5,6 @@ import {
     Empty,
     Modal,
     Typography,
-    Badge
 } from 'antd';
 const { Paragraph, Text } = Typography;
 const { confirm } = Modal
@@ -15,7 +14,6 @@ import {
     UserOutlined,
     ExclamationCircleOutlined,
     PushpinOutlined,
-    GlobalOutlined,
     CalendarOutlined
 } from '@ant-design/icons';
 import Link from 'next/link'
@@ -99,16 +97,16 @@ const SlideComponent = ({ _id, photos, linkUrl, describe, userId, view_count, na
                     title={
                         name ?
                             <Link href={"/slide/" + _id}>
-                                <>
-                                    <Paragraph strong underline>{name}</Paragraph>
-                                </>
+                                <Paragraph strong underline>{name}</Paragraph>
                             </Link>
                             :
-                            "No Name"}
+                            "No Name"
+                    }
                     description={
                         describe ?
                             <Paragraph ellipsis={true, { rows: 2 }} type="secondary">{describe}</Paragraph>
-                            : "No Describe"
+                            :
+                            "No Describe"
                     } />
                 <Divider>Info</Divider>
                 <Link href={"/slide/" + _id}>

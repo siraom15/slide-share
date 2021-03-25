@@ -237,8 +237,10 @@ const EditSlide = () => {
                                                     {
                                                         slideData ?
                                                             <Row>
-                                                                <Col span={24}>
-                                                                    <Title level={4}>Public : </Title>
+                                                                <Col>
+                                                                    <Title level={4}>Public :  </Title>
+                                                                </Col>
+                                                                <Col>
                                                                     <Switch checked={slidePublic} onChange={(val) => { setSlidePublic(val); }} />
                                                                 </Col>
                                                             </Row>
@@ -249,7 +251,7 @@ const EditSlide = () => {
                                                         slideData ?
                                                             <Row style={{ marginTop: '1em' }}>
                                                                 <Col>
-                                                                    <Button type="primary" shape="round" onClick={() => { UpdateData() }}>Save</Button>
+                                                                    <Button type="success" shape="round" onClick={() => { UpdateData() }}>Save</Button>
                                                                 </Col>
                                                                 <Col>&nbsp;</Col>
                                                                 <Col>
