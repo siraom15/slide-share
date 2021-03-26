@@ -50,7 +50,7 @@ const ViewSlide = () => {
       icon: <ExclamationCircleOutlined />,
       content: `Full Link \n${linkUrl}`,
       onOk() {
-        router.push(linkUrl)
+        window.open(linkUrl,'_blank');
       },
       onCancel() {
       },

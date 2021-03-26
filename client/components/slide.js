@@ -55,7 +55,7 @@ const SlideComponent = ({ _id, photos, linkUrl, describe, userId, view_count, na
             icon: <ExclamationCircleOutlined />,
             content: `Full Link \n${linkUrl}`,
             onOk() {
-                router.push(linkUrl)
+                window.open(linkUrl,'_blank');
             },
             onCancel() {
             },
