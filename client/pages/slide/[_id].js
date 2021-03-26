@@ -79,7 +79,6 @@ const ViewSlide = () => {
   }
   fetchData();
   useEffect(async () => {
-
     let checkLoggedIn = async () => {
       if (cookies.get('token')) {
         await fetch(host + '/api/user/mydata', {
@@ -106,8 +105,6 @@ const ViewSlide = () => {
       }
     }
     checkLoggedIn();
-
-    UpdateView(_id);
     let payload = { _id: _id };
     await fetch(host + "/api/slide/getSlideById", {
       method: "POST",
