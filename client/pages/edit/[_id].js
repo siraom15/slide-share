@@ -14,7 +14,9 @@ import {
     Button,
     Switch,
     Divider,
-    Popconfirm
+    Popconfirm,
+    Upload,
+    Form
 } from 'antd';
 const { Paragraph, Title } = Typography;
 import Navbar from '../../components/navbar';
@@ -25,7 +27,7 @@ import React, { useState, useEffect } from 'react'
 import { host } from '../../config/server'
 import Cookies from 'js-cookie';
 import cookies from 'js-cookie';
-// import { ExclamationCircleOutlined } from '@ant-design/icons'
+import { UploadOutlined } from '@ant-design/icons'
 
 const EditSlide = () => {
     const router = useRouter();
@@ -34,16 +36,17 @@ const EditSlide = () => {
     const [slideName, setSlideName] = useState("");
     const [slideDescribe, setSlideDescribe] = useState("");
     const [slideLinkUrl, setSlideLinkUrl] = useState("");
-    const [slidePhoto, setSlidePhoto] = useState("");
+    const [slidePhoto, setSlidePhoto] = useState(null);
     const [slidePublic, setSlidePublic] = useState("");
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+    const [newSlideLinkUrl, setNewSlideLinkUrl] = useState(null);
     const UpdateData = async () => {
         const payload = {
             "name": slideName,
             "describe": slideDescribe,
             "linkUrl": slideLinkUrl,
-            "public": slidePublic
+            "public": slidePublic,
+            "photos" : [{url : newSlideLinkUrl ? newSlideLinkUrl : slidePhoto}]
         }
         await fetch(host + "/api/slide/update/" + _id, {
             method: 'PUT',
@@ -59,13 +62,20 @@ const EditSlide = () => {
                     return message.error(data.error)
                 }
                 message.success(data.success)
-
             })
             .catch(err => {
                 console.log(err);
             })
-    }
+            fetchData(true);
 
+    }
+    const normFile = (e) => {
+        console.log('Upload event:', e);
+        if (Array.isArray(e)) {
+            return e;
+        }
+        return e && e.file;
+    };
     const deleteSlide = async () => {
         await fetch(host + "/api/slide/delete/" + _id, {
             method: 'DELETE',
@@ -104,14 +114,39 @@ const EditSlide = () => {
                 setSlideDescribe(res.data.describe);
                 setSlideLinkUrl(res.data.linkUrl);
                 setSlidePublic(res.data.public);
-                if (force) return message.success("Reset Success");
+                // if (force) return message.success("Fetch Success");
             })
             .catch(err => {
-                // message.error("Server Down")
                 return null
             })
     }
 
+    const uploadImg = async (file) => {
+        if (!file) return null;
+        message.loading("Uploading...");
+        const formData = new FormData();
+        formData.append('upload_preset', 'slide-share');
+        formData.append('file', file);
+        await fetch('https://api.cloudinary.com/v1_1/share-slide/image/upload', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(result => {
+                if (result.url) {
+                    message.success("Upload Image Success ( Not yet save )")
+                    setNewSlideLinkUrl(result.url);
+                } else {
+                    message.error("Upload Image Failure");
+                    setNewSlideLinkUrl(null);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                message.error("Upload Image Failure")
+                setNewSlideLinkUrl(null);
+            });
+    }
 
     fetchData();
 
@@ -184,8 +219,26 @@ const EditSlide = () => {
                                                         <div style={{ padding: '2vh', marginTop: '25%' }}>
                                                             <Empty description="No Image" />
                                                         </div>
-
                                                 }
+                                                <Form>
+                                                    <Form.Item
+                                                        name="photos"
+                                                        valuePropName="file"
+                                                        getValueFromEvent={normFile}
+                                                        extra="Upload Image Slide Preview"
+                                                        onChange={async (e) => { await uploadImg(e.target.files[0]) }}
+                                                    >
+                                                        <Upload
+                                                            maxCount={1}
+                                                            listType="picture"
+                                                            className="upload-list-inline"
+                                                            onRemove={(e) => { message.success("Removed Image"); setNewSlideLinkUrl(null); }}
+                                                        >
+                                                            <Button icon={<UploadOutlined />}>Change Image</Button>
+                                                        </Upload>
+                                                    </Form.Item>
+                                                </Form>
+
                                             </Col>
                                             <Col xs={24} sm={24} md={24} lg={14} xl={14}>
                                                 <Card hoverable style={{ padding: '1em' }}>
@@ -268,7 +321,6 @@ const EditSlide = () => {
                                                                 <Popconfirm
                                                                     title="Are you sure to delete this slide?"
                                                                     onConfirm={deleteSlide}
-                                                                    // onCancel={}
                                                                     okText="Yes"
                                                                     cancelText="No"
                                                                 >
