@@ -14,7 +14,7 @@ exports.create_slide = async (req, res) => {
         name: name,
         describe: describe,
         linkUrl: linkUrl,
-        photos: photos,
+        photos: photos ? photos : [],
         public: public,
         view_count: 0,
         createTime: dateNow,
@@ -114,7 +114,7 @@ exports.get_slide_by_user = async (req, res) => {
 //update
 exports.update = async (req, res, next) => {
     const { slideId } = req.params;
-    const { name, describe, public, linkUrl } = req.body;
+    const { name, describe, public, linkUrl, photos } = req.body;
     const { _id } = req.user_data;
     if (!slideId || !_id) return res.status(400).json({
         "error": "Bad Request"
@@ -127,7 +127,8 @@ exports.update = async (req, res, next) => {
             name: name,
             describe: describe,
             public: public,
-            linkUrl: linkUrl
+            linkUrl: linkUrl,
+            photos: photos ? photos : null
 
         }).then(data => {
             if (!data) {

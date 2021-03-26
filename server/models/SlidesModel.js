@@ -17,9 +17,9 @@ const SlidesSchema = mongoose.Schema({
         {
             url: {
                 type: String,
-
+                default : null
             }
-        }
+        },
     ],
     public: {
         type: Boolean,
