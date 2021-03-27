@@ -33,7 +33,7 @@ const tailLayout = {
     wrapperCol: { offset: 6, span: 14 },
 };
 const normFile = (e) => {
-    console.log('Upload event:', e);
+    // console.log('Upload event:', e);
     if (Array.isArray(e)) {
         return e;
     }
@@ -102,6 +102,7 @@ const UploadPage = () => {
 
     const uploadImg = async () => {
         if(!image) return null;
+        const loadingMessage = message.loading("Uploading Image...",0)
         const formData = new FormData();
         formData.append('upload_preset', 'slide-share');
         formData.append('file', image);
@@ -113,9 +114,11 @@ const UploadPage = () => {
             .then(response => response.json())
             .then(result => {
                 if (result.url) {
+                    setTimeout(loadingMessage,0);
                     message.success("Upload Image Success")
                     return result.url
                 } else {
+                    setTimeout(loadingMessage,0);
                     message.error("Upload Image Failure")
                     return null;
                 }
@@ -186,7 +189,7 @@ const UploadPage = () => {
                                     defaultFileList={[...fileList]}
                                     className="upload-list-inline"
                                     onRemove={(e) => setImage("")}
-
+                                    onChange={(e)=>{console.log(e);}}
                                 >
                                     <Button icon={<UploadOutlined />}>Upload</Button>
                                 </Upload>

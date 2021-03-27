@@ -41,13 +41,15 @@ const EditSlide = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [newSlideLinkUrl, setNewSlideLinkUrl] = useState(null);
     const UpdateData = async () => {
+        console.log(slidePhoto);
         const payload = {
             "name": slideName,
             "describe": slideDescribe,
             "linkUrl": slideLinkUrl,
             "public": slidePublic,
-            "photos" : [{url : newSlideLinkUrl ? newSlideLinkUrl : slidePhoto}]
+            "photos": [{ url: newSlideLinkUrl ? newSlideLinkUrl : slidePhoto }]
         }
+        console.log(payload);
         await fetch(host + "/api/slide/update/" + _id, {
             method: 'PUT',
             headers: {
@@ -66,7 +68,7 @@ const EditSlide = () => {
             .catch(err => {
                 console.log(err);
             })
-            fetchData(true);
+        fetchData(true);
 
     }
     const normFile = (e) => {
@@ -114,6 +116,7 @@ const EditSlide = () => {
                 setSlideDescribe(res.data.describe);
                 setSlideLinkUrl(res.data.linkUrl);
                 setSlidePublic(res.data.public);
+                setSlidePhoto(res.data.photos[0]?.url ? res.data.photos[0].url : null );
                 // if (force) return message.success("Fetch Success");
             })
             .catch(err => {
@@ -123,7 +126,7 @@ const EditSlide = () => {
 
     const uploadImg = async (file) => {
         if (!file) return null;
-        message.loading("Uploading...");
+        const loadingMessage = message.loading("Uploading...", 0);
         const formData = new FormData();
         formData.append('upload_preset', 'slide-share');
         formData.append('file', file);
@@ -134,7 +137,8 @@ const EditSlide = () => {
             .then(response => response.json())
             .then(result => {
                 if (result.url) {
-                    message.success("Upload Image Success ( Not yet save )")
+                    setTimeout(loadingMessage, 0);
+                    message.success("Upload Image Success ( Not yet save )", 5)
                     setNewSlideLinkUrl(result.url);
                 } else {
                     message.error("Upload Image Failure");
